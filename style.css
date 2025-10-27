@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+#navbar{
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: .5rem 5rem;
+    box-shadow: 5px 5px 20px rgba(0,0,0,.5);
+    background: black;
+}
+.navbar .navbar-brand{
+    font-size: 25px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ff9e00, #ff4d00, #8b4513);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#navbarSupportedContent a{
+    color: white;
+    border-bottom: 2px solid transparent;
+}
+#navbarSupportedContent a:hover {
+    border-bottom: 2px solid;
+    border-image: linear-gradient(to right, #ff9e00, #ff4d00, #8b4513, #6b8e23) 1;
+}
+#navbarSupportedContent button {
+  background: linear-gradient(90deg, #ff9e00, #ff4d00);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+#navbarSupportedContent button:hover {
+  background: linear-gradient(90deg, #ffb347, #ff6347);
+}
+
+section{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#home{
+    background-image: linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.4)),url("https://assets.clevelandclinic.org/transform/LargeFeatureImage/dd7ab899-4ec0-4ecb-911a-09211c325697/misc-herbs-spices-1496340343");
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    flex-direction: column;
+}
+#home h1{
+    font-size: 100px;
+    color: aliceblue;
+    letter-spacing: 1px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-shadow: 0px 1px x 0px gray,
+                 0px 2px x 0px gray,
+                 0px 3px x 0px gray,
+                 0px 4px x 0px gray,
+                 0px 5px x 0px gray,
+                 0px 6px x 0px gray,
+                 0px 7px x 0px gray;
+}
+#home p{
+    font-size: 18px;
+    color: aliceblue;
+}
+#home .input-group{
+    width: 39%;
+    height: 40px;
+}
+.signin{
+    background: gray !important;
+    color:aqua !important;
+    box-shadow: 2px 4px 5px rgba(0,0,0,.3);
+}
+
+#about{
+    background: radial-gradient(#fff,#ffd6d6);
+}
+#about h1{
+    font-weight: 800;
+    font-size: 50px;
+    color: aqua;
+}
+#about p{
+    color: black;
+}
+
+
+#product{
+    background: rgb(168, 167, 167);
+}
+#product h1{
+    font-size: 50px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+#product img{
+    width: 200px;
+    height: 200px;
+}
+.card{
+    width: 250px;
+    height: 250px;
+    background: rgb(172, 170, 170) !important;
+    border: none !important;
+    box-shadow: 15px 20px 20px rgba(0,0,0,.3),
+    inset 4px 4px 10px white;
+    border-radius: 20px;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 60px;
+    transition: .2s;
+}
+.card:hover{
+    box-shadow: inset 5px 5px 10px rgba(0,0,0,.3),
+                 inset -4px -4px 10px white;
+    transition: .2s;
+
+}
+
+
+
+#contact img{
+    height: 100%;
+    background-color: radial-gradient(#fff,#ffd6d6);
+}
+.box{
+    width: 80% !important;
+     margin-top: 15px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+#contact input{
+    margin: 12px 0px;
+}
+#contact textarea{
+    margin: 12px 0px;
+}
+
