@@ -1,0 +1,1934 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+#navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: .6rem 4rem;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
+    background: rgba(10, 8, 6, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 158, 0, 0.15);
+}
+
+.navbar .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none !important;
+    padding: 0;
+    transition: transform 0.25s ease;
+}
+
+.navbar .navbar-brand:hover {
+    transform: translateY(-1px);
+}
+
+.brand-icon-wrap {
+    font-size: 26px;
+    line-height: 1;
+    filter: drop-shadow(0 0 12px rgba(255, 77, 0, 0.8));
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
+}
+
+.navbar .navbar-brand:hover .brand-icon-wrap {
+    transform: scale(1.18) rotate(-8deg);
+}
+
+.brand-name-text {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+.brand-name-spice {
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.brand-name-market {
+    background: linear-gradient(90deg, #ffb347 0%, #ff5722 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 12px rgba(255, 120, 0, 0.45));
+}
+
+.brand-heritage-pill {
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #1a120b;
+    background: linear-gradient(135deg, #ffd043 0%, #ff9800 100%);
+    padding: 3px 7px;
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(255, 158, 0, 0.45);
+    margin-left: 3px;
+    line-height: 1.2;
+}
+
+/* --- Modern Luxury Navigation Options (Pill Buttons with Glow Hover) --- */
+#navbarSupportedContent .navbar-nav {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(22, 17, 13, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 50px;
+    padding: 5px 8px;
+    gap: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+#navbarSupportedContent .navbar-nav .nav-item {
+    display: flex;
+    align-items: center;
+}
+
+#navbarSupportedContent .navbar-nav .nav-link {
+    color: #e2d7cb !important;
+    font-size: 14.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px;
+    padding: 8px 20px !important;
+    border-radius: 50px !important;
+    border: 1px solid transparent !important;
+    text-decoration: none !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid transparent !important;
+}
+
+#navbarSupportedContent .navbar-nav .nav-link:hover {
+    color: #ffffff !important;
+    background: radial-gradient(circle at center, rgba(255, 158, 0, 0.28) 0%, rgba(255, 77, 0, 0.15) 100%) !important;
+    border-color: rgba(255, 158, 0, 0.55) !important;
+    box-shadow: 0 4px 18px rgba(255, 120, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.22) !important;
+    transform: translateY(-2px);
+    border-image: none !important;
+}
+
+#navbarSupportedContent .navbar-nav .nav-link:active,
+#navbarSupportedContent .navbar-nav .nav-link.active {
+    color: #ffaa1d !important;
+    background: rgba(255, 158, 0, 0.18) !important;
+    border-color: rgba(255, 158, 0, 0.45) !important;
+    box-shadow: 0 0 14px rgba(255, 158, 0, 0.22) !important;
+}
+
+@media (max-width: 991.98px) {
+    #navbar {
+        padding: 0.75rem 1.5rem !important;
+    }
+    #navbarSupportedContent .navbar-nav {
+        border-radius: 20px;
+        padding: 12px 10px;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        margin: 15px 0 !important;
+        gap: 6px;
+    }
+    #navbarSupportedContent .navbar-nav .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 10px 16px !important;
+    }
+    .nav-action-group {
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* --- Unified Luxury Navbar Action Buttons --- */
+.nav-action-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-nav-action {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 42px !important;
+    padding: 0 18px !important;
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    cursor: pointer;
+}
+
+/* 1. Luxury Cart Action Button */
+.btn-nav-cart {
+    background: rgba(22, 17, 13, 0.85) !important;
+    color: #f5ede4 !important;
+    border: 1px solid rgba(255, 158, 0, 0.38) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+    gap: 8px;
+}
+
+.btn-nav-cart:hover {
+    background: rgba(35, 25, 18, 0.95) !important;
+    border-color: rgba(255, 158, 0, 0.7) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(255, 120, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+}
+
+.btn-nav-cart .cart-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.nav-cart-badge,
+.btn-nav-cart .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #ffaa1d 0%, #ff4d00 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(255, 77, 0, 0.5);
+    margin-left: 4px;
+}
+
+/* 2. Luxury User Profile / Auth Action Button */
+.btn-nav-user,
+.btn-nav-auth {
+    background: linear-gradient(90deg, #ff9e00 0%, #ff4d00 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 215, 0, 0.4) !important;
+    box-shadow: 0 4px 18px rgba(255, 77, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+    gap: 8px;
+}
+
+.btn-nav-user:hover,
+.btn-nav-auth:hover {
+    background: linear-gradient(90deg, #ffa81a 0%, #ff5c1a 100%) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(255, 77, 0, 0.55), 0 0 15px rgba(255, 158, 0, 0.35) !important;
+    filter: brightness(1.05);
+}
+
+.btn-nav-user::after {
+    vertical-align: middle;
+    margin-left: 4px;
+}
+
+/* 3. Luxury User Dropdown Menu */
+.luxury-user-dropdown {
+    background: rgba(22, 17, 13, 0.96) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 158, 0, 0.35) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 120, 0, 0.15) !important;
+    padding: 10px 8px !important;
+    min-width: 220px;
+}
+
+.dropdown-header-box {
+    padding: 8px 14px;
+}
+
+.user-greeting {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #ffaa1d;
+    margin-bottom: 2px;
+}
+
+.user-email-text {
+    display: block;
+    font-size: 13px;
+    color: #e6ded5;
+    word-break: break-all;
+}
+
+.luxury-user-dropdown .dropdown-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    margin: 6px 0;
+}
+
+.dropdown-logout-link {
+    color: #ff6b6b !important;
+    font-weight: 600 !important;
+    font-size: 13.5px !important;
+    border-radius: 10px !important;
+    padding: 8px 14px !important;
+    transition: all 0.2s ease !important;
+}
+
+.dropdown-logout-link:hover {
+    background: rgba(255, 82, 82, 0.15) !important;
+    color: #ff5252 !important;
+    transform: translateX(3px);
+}
+
+section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Modern Luxury Hero Section (Concept A: Dark Culinary Luxury) --- */
+#home {
+    position: relative;
+    min-height: 94vh;
+    background: #0d0a08 url("hero_spice_luxury.jpg") no-repeat center bottom;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 110px 20px 70px 20px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    /* Soft, transparent gradient so the background spices, colors, and embers are bright & clearly visible */
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.05) 40%, rgba(13, 10, 8, 0.45) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.hero-pill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(18, 14, 11, 0.88);
+    border: 1px solid rgba(255, 158, 0, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    color: #ffaa1d;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    padding: 8px 18px;
+    border-radius: 50px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5.5vw, 4.4rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 22px;
+    font-family: "Poppins", sans-serif;
+}
+
+.hero-title-text {
+    display: inline-block;
+    color: #ffffff;
+    text-shadow: 0 4px 25px rgba(0, 0, 0, 0.95), 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.hero-title-highlight {
+    display: inline-block;
+    background: linear-gradient(90deg, #ffd043 0%, #ff9800 45%, #ff5722 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #ffaa1d;
+    text-shadow: none !important;
+    filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 25px rgba(255, 158, 0, 0.6));
+}
+
+.hero-subtitle {
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    color: #ffffff;
+    line-height: 1.68;
+    max-width: 700px;
+    margin: 0 auto 36px auto;
+    text-shadow: 0 3px 15px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9);
+    font-weight: 500;
+}
+
+.hero-actions {
+    margin-bottom: 50px;
+}
+
+.btn-hero-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(90deg, #ff9e00, #ff4d00);
+    color: #ffffff !important;
+    font-size: 15.5px;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none !important;
+    box-shadow: 0 10px 28px rgba(255, 77, 0, 0.4), 0 0 15px rgba(255, 158, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-hero-primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 14px 36px rgba(255, 77, 0, 0.55), 0 0 25px rgba(255, 158, 0, 0.35);
+    color: #ffffff !important;
+}
+
+.btn-hero-primary .btn-arrow {
+    transition: transform 0.25s ease;
+}
+
+.btn-hero-primary:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+.btn-hero-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(22, 17, 13, 0.75);
+    color: #f0e6d8 !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: 15.5px;
+    font-weight: 600;
+    padding: 14px 30px;
+    border-radius: 50px;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+}
+
+.btn-hero-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 158, 0, 0.5);
+    color: #ffffff !important;
+    transform: translateY(-3px);
+}
+
+/* Floating Trust Bar */
+.hero-trust-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+    background: rgba(20, 15, 11, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 158, 0, 0.28);
+    border-radius: 20px;
+    padding: 14px 32px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.65);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hero-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.hero-trust-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.hero-trust-item strong {
+    display: block;
+    color: #ffffff;
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.hero-trust-item span {
+    display: block;
+    color: #c4b5a6;
+    font-size: 11.5px;
+}
+
+.hero-trust-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 768px) {
+    .hero-trust-divider {
+        display: none;
+    }
+    .hero-trust-bar {
+        gap: 16px;
+        padding: 12px 18px;
+    }
+}
+
+/* --- Modern Luxury About Us Section --- */
+#about {
+    background: radial-gradient(circle at 90% 15%, rgba(255, 110, 20, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 10% 85%, rgba(255, 158, 0, 0.08) 0%, transparent 45%),
+        linear-gradient(180deg, #0d0c0a 0%, #16120e 100%);
+    padding: 100px 20px;
+    min-height: auto;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+#about::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 158, 0, 0.3), transparent);
+}
+
+.about-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 158, 0, 0.12);
+    color: #ffaa1d;
+    border: 1px solid rgba(255, 158, 0, 0.3);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.about-title {
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.about-title span {
+    background: linear-gradient(90deg, #ff9e00, #ff4d00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.about-lead {
+    color: #ded7ce;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.about-desc {
+    color: #a0978b;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin-bottom: 28px;
+}
+
+/* Value Pillar Cards in About */
+.about-pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 25px;
+}
+
+.about-pillar-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    padding: 18px;
+    transition: all 0.3s ease;
+}
+
+.about-pillar-card:hover {
+    background: rgba(255, 158, 0, 0.08);
+    border-color: rgba(255, 158, 0, 0.3);
+    transform: translateY(-4px);
+}
+
+.about-pillar-icon {
+    font-size: 26px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.about-pillar-card h5 {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.about-pillar-card p {
+    color: #9c9489;
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.45;
+}
+
+/* About Visual Frame */
+.about-image-wrapper {
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-image-wrapper img.about-hero-img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+.about-image-wrapper:hover img.about-hero-img {
+    transform: scale(1.03);
+}
+
+.about-floating-stamp {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(20, 16, 13, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 158, 0, 0.4);
+    border-radius: 20px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.about-floating-stamp img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.about-stamp-text h6 {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.about-stamp-text p {
+    color: #ffaa1d;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 0;
+}
+
+
+/* --- Modern Luxury Products Section --- */
+#product {
+    background: radial-gradient(circle at 15% 15%, rgba(255, 158, 0, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(255, 77, 0, 0.08) 0%, transparent 45%),
+        linear-gradient(180deg, #16120e 0%, #110f0d 100%);
+    padding: 100px 20px;
+    min-height: auto;
+    position: relative;
+    width: 100%;
+}
+
+#product::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 158, 0, 0.25), transparent);
+}
+
+.product-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 158, 0, 0.12);
+    color: #ffaa1d;
+    border: 1px solid rgba(255, 158, 0, 0.3);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.product-section-title {
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+
+.product-section-title span {
+    background: linear-gradient(90deg, #ff9e00, #ff4d00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.product-section-subtitle {
+    color: #a59e93;
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+}
+
+/* Luxury Product Cards */
+.spice-card {
+    background: rgba(26, 22, 18, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+}
+
+.spice-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 158, 0, 0.4);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 158, 0, 0.15);
+}
+
+.spice-card-img-wrap {
+    position: relative;
+    background: radial-gradient(circle at center, rgba(255, 158, 0, 0.12) 0%, rgba(20, 16, 13, 0.8) 75%);
+    padding: 30px 20px 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-height: 200px;
+}
+
+.spice-card-img-wrap img {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+    filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.5));
+}
+
+.spice-card:hover .spice-card-img-wrap img {
+    transform: scale(1.08) rotate(2deg);
+}
+
+.spice-card-tag {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(15, 12, 10, 0.85);
+    backdrop-filter: blur(8px);
+    color: #ffaa1d;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 158, 0, 0.3);
+}
+
+.spice-card-rating {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(15, 12, 10, 0.85);
+    backdrop-filter: blur(8px);
+    color: #ffd700;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 215, 0, 0.25);
+}
+
+.spice-card-body {
+    padding: 20px 22px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.spice-card-title {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    transition: color 0.2s ease;
+}
+
+.spice-card:hover .spice-card-title {
+    color: #ffaa1d;
+}
+
+.spice-card-desc {
+    color: #9c9489;
+    font-size: 13px;
+    line-height: 1.45;
+    margin-bottom: 18px;
+    flex-grow: 1;
+}
+
+.spice-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin-top: auto;
+}
+
+.spice-price-tag {
+    display: flex;
+    flex-direction: column;
+}
+
+.spice-price-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8c8478;
+    font-weight: 600;
+}
+
+.spice-price-val {
+    font-size: 1.35rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ffb347, #ff6347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+
+.btn-add-cart-spice {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: linear-gradient(90deg, #ff9e00, #ff4d00);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(255, 77, 0, 0.3);
+    text-decoration: none;
+}
+
+.btn-add-cart-spice:hover {
+    background: linear-gradient(90deg, #ffa81a, #ff5c1a);
+    box-shadow: 0 6px 20px rgba(255, 77, 0, 0.45);
+    transform: translateY(-2px);
+    color: #ffffff !important;
+}
+
+.btn-add-cart-spice:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   AUTHENTIC SPICE WEIGHT SELECTOR (Kg / Grams)
+   ========================================================================== */
+.spice-weight-section {
+    margin: 10px 0 12px 0;
+    padding: 9px 11px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 158, 0, 0.16);
+    border-radius: 14px;
+    transition: all 0.25s ease;
+}
+
+.spice-weight-section:hover {
+    border-color: rgba(255, 158, 0, 0.32);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.spice-weight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+.spice-weight-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #c9baa8;
+    margin: 0;
+}
+
+.spice-base-rate {
+    font-size: 11px;
+    color: #ffaa1d;
+    font-weight: 600;
+    background: rgba(255, 170, 29, 0.1);
+    padding: 2px 7px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 170, 29, 0.25);
+}
+
+.spice-weight-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.weight-pill {
+    background: rgba(18, 14, 11, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #d1c5b8;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 9px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    line-height: 1.2;
+    user-select: none;
+}
+
+.weight-pill:hover {
+    background: rgba(255, 158, 0, 0.18);
+    border-color: rgba(255, 158, 0, 0.45);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.weight-pill.active {
+    background: linear-gradient(135deg, #ff9e00 0%, #ff4d00 100%);
+    border-color: #ff9e00;
+    color: #ffffff !important;
+    font-weight: 700;
+    box-shadow: 0 3px 10px rgba(255, 77, 0, 0.35);
+    transform: translateY(-1px);
+}
+
+.custom-weight-box {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.custom-weight-input {
+    background: rgba(12, 10, 8, 0.9) !important;
+    border: 1px solid rgba(255, 158, 0, 0.3) !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    padding: 4px 8px !important;
+    border-radius: 8px !important;
+    width: 78px !important;
+}
+
+.custom-unit-select {
+    background: rgba(12, 10, 8, 0.9) !important;
+    border: 1px solid rgba(255, 158, 0, 0.3) !important;
+    color: #ffd280 !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    padding: 4px 6px !important;
+    border-radius: 8px !important;
+    width: 82px !important;
+}
+
+.btn-apply-weight {
+    background: rgba(255, 158, 0, 0.2);
+    border: 1px solid rgba(255, 158, 0, 0.4);
+    color: #ffb347;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-apply-weight:hover {
+    background: linear-gradient(90deg, #ff9e00, #ff4d00);
+    color: #ffffff;
+    border-color: #ff4d00;
+}
+
+/* Cart Page Weight Switcher & Badges */
+.cart-item-weight-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #ffb703;
+    background: rgba(255, 183, 3, 0.12);
+    border: 1px solid rgba(255, 183, 3, 0.3);
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 6px;
+}
+
+.cart-weight-select {
+    background: rgba(20, 16, 12, 0.95);
+    border: 1px solid rgba(255, 158, 0, 0.3);
+    color: #ffd899;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 8px;
+    outline: none;
+    margin-top: 4px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.cart-weight-select:focus {
+    border-color: #ff9e00;
+    box-shadow: 0 0 8px rgba(255, 158, 0, 0.3);
+}
+
+.cart-unit-rate-hint {
+    font-size: 11px;
+    color: #9c9489;
+    margin-top: 2px;
+}
+
+/* Bottom Cart CTA */
+.btn-view-vault-cart {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 158, 0, 0.4);
+    color: #ffffff !important;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.btn-view-vault-cart:hover {
+    background: linear-gradient(90deg, #ff9e00, #ff4d00);
+    border-color: transparent;
+    color: #ffffff !important;
+    box-shadow: 0 12px 30px rgba(255, 77, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+
+
+/* --- Modern Luxury Contact Section --- */
+#contact {
+    background: radial-gradient(circle at 10% 20%, rgba(255, 110, 20, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 158, 0, 0.1) 0%, transparent 40%),
+        linear-gradient(180deg, #181512 0%, #0d0c0a 100%);
+    padding: 90px 20px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+#contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 158, 0, 0.4), transparent);
+}
+
+.contact-container {
+    max-width: 1160px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.contact-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 158, 0, 0.15);
+    color: #ffaa1d;
+    border: 1px solid rgba(255, 158, 0, 0.35);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.contact-title {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+
+.contact-title span {
+    background: linear-gradient(90deg, #ff9e00, #ff4d00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact-subtitle {
+    color: #a09a90;
+    font-size: 1.05rem;
+    max-width: 620px;
+    line-height: 1.6;
+    margin-bottom: 35px;
+}
+
+/* Glassmorphism Card Wrapper */
+.contact-glass-card {
+    background: rgba(25, 22, 19, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+/* Visual Card Column (Left) */
+.contact-visual-panel {
+    background: linear-gradient(180deg, rgba(35, 29, 23, 0.95), rgba(20, 17, 14, 0.98));
+    padding: 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+}
+
+.contact-image-frame {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-image-frame img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.contact-image-frame:hover img {
+    transform: scale(1.04);
+}
+
+.contact-image-tag {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: rgba(15, 12, 10, 0.85);
+    backdrop-filter: blur(8px);
+    color: #ff9e00;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 158, 0, 0.3);
+}
+
+/* Info Tiles */
+.contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    transition: all 0.25s ease;
+}
+
+.contact-info-item:hover {
+    background: rgba(255, 158, 0, 0.08);
+    border-color: rgba(255, 158, 0, 0.25);
+    transform: translateX(4px);
+}
+
+.contact-info-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255, 158, 0, 0.2), rgba(255, 77, 0, 0.2));
+    border: 1px solid rgba(255, 158, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.contact-info-content h6 {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 2px 0;
+}
+
+.contact-info-content p {
+    color: #a59e93;
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Form Panel (Right) */
+.contact-form-panel {
+    padding: 45px 40px;
+}
+
+.contact-form-title {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.contact-form-desc {
+    color: #9c9489;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.contact-field-group {
+    margin-bottom: 18px;
+}
+
+.contact-field-label {
+    display: block;
+    color: #d6cfc4;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.contact-custom-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 14px !important;
+    padding: 12px 16px !important;
+    color: #ffffff !important;
+    font-size: 14px !important;
+    transition: all 0.25s ease !important;
+    box-sizing: border-box !important;
+}
+
+.contact-custom-input:focus {
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: #ff9e00 !important;
+    box-shadow: 0 0 0 4px rgba(255, 158, 0, 0.18) !important;
+    color: #ffffff !important;
+}
+
+.contact-custom-input::placeholder {
+    color: #7a7368 !important;
+}
+
+.contact-custom-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff9e00' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+.contact-custom-select option {
+    background: #1f1b16;
+    color: #ffffff;
+}
+
+.btn-contact-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 28px;
+    background: linear-gradient(90deg, #ff9e00, #ff4d00);
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 24px rgba(255, 77, 0, 0.3);
+}
+
+.btn-contact-submit:hover {
+    background: linear-gradient(90deg, #ffa81a, #ff5c1a);
+    box-shadow: 0 12px 30px rgba(255, 77, 0, 0.45);
+    transform: translateY(-2px);
+    color: #ffffff;
+}
+
+.btn-contact-submit:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   LUXURY DARK CULINARY FOOTER
+   ========================================================================== */
+.luxury-footer {
+    background: radial-gradient(circle at 50% 0%, rgba(255, 126, 0, 0.08) 0%, transparent 65%),
+        linear-gradient(180deg, #100c08 0%, #080605 40%, #040302 100%);
+    border-top: 1px solid rgba(255, 140, 0, 0.2);
+    color: #e5e5e5;
+    padding-top: 60px;
+    padding-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+.luxury-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 158, 0, 0.6), transparent);
+}
+
+/* Harvest Newsletter Banner */
+.footer-harvest-newsletter {
+    background: rgba(22, 17, 13, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 140, 0, 0.2);
+    border-radius: 20px;
+    padding: 30px 35px;
+    margin-bottom: 50px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.newsletter-pill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 140, 0, 0.12);
+    border: 1px solid rgba(255, 140, 0, 0.3);
+    color: #ff9e00;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.newsletter-title {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.newsletter-subtitle {
+    color: #a89f91;
+    font-size: 14px;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+.newsletter-form-group {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.newsletter-input {
+    flex: 1;
+    background: rgba(10, 8, 6, 0.75);
+    border: 1px solid rgba(255, 140, 0, 0.25);
+    color: #ffffff;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+.newsletter-input:focus {
+    border-color: #ff9e00;
+    box-shadow: 0 0 0 3px rgba(255, 158, 0, 0.2);
+    background: rgba(14, 11, 8, 0.9);
+}
+
+.newsletter-input::placeholder {
+    color: #7a6e60;
+}
+
+.btn-newsletter-submit {
+    background: linear-gradient(135deg, #ff9e00 0%, #ff5e00 100%);
+    border: none;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 20px rgba(255, 94, 0, 0.35);
+}
+
+.btn-newsletter-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 94, 0, 0.5);
+    filter: brightness(1.08);
+}
+
+/* Footer Main Grid */
+.footer-brand-title {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 10%, #ffc570 60%, #ff8c00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-desc {
+    color: #a89f91;
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.footer-provenance-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.footer-pill-item {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #d1c2b0;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 140, 0, 0.15);
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.footer-social-strip {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 140, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff9e00;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.footer-social-link:hover {
+    background: rgba(255, 140, 0, 0.2);
+    border-color: #ff9e00;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3);
+}
+
+/* Footer Column Headers */
+.footer-heading {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    margin-bottom: 18px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, #ff9e00, #ff4d00);
+    border-radius: 2px;
+}
+
+/* Footer Link Lists */
+.footer-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-nav-list li {
+    margin-bottom: 10px;
+}
+
+.footer-nav-link {
+    color: #a89f91;
+    font-size: 13.5px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.footer-nav-link::before {
+    content: '›';
+    color: #ff9e00;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.2s ease;
+}
+
+.footer-nav-link:hover {
+    color: #ff9e00;
+    transform: translateX(4px);
+}
+
+.footer-nav-link:hover::before {
+    transform: translateX(2px);
+}
+
+/* Footer Contact List */
+.footer-contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+    color: #a89f91;
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+.footer-contact-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.footer-contact-item a {
+    color: #a89f91;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-contact-item a:hover {
+    color: #ff9e00;
+}
+
+/* Footer Bottom Bar */
+.footer-bottom-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 45px;
+    padding-top: 25px;
+}
+
+.footer-bottom-text {
+    color: #7a6e60;
+    font-size: 12.5px;
+    margin-bottom: 0;
+}
+
+.footer-trust-strip {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.footer-trust-tag {
+    font-size: 12px;
+    color: #a08f7d;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* ==========================================================================
+   Luxury Spice Toast Notification (Stylish Auto-Dismissing Popup)
+   ========================================================================== */
+.spice-toast-container {
+    position: fixed;
+    top: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10005;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 92%;
+    max-width: 480px;
+}
+
+.spice-toast {
+    pointer-events: auto;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    background: rgba(22, 17, 13, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 158, 0, 0.45);
+    border-radius: 20px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75),
+                0 0 35px rgba(255, 120, 0, 0.22),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    padding: 13px 16px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    color: #ffffff;
+    opacity: 0;
+    transform: translateY(-25px) scale(0.94);
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spice-toast.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.spice-toast.hiding {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.94);
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 1, 1),
+                transform 0.25s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.spice-toast-thumb {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 12px;
+    background: radial-gradient(circle at center, rgba(255, 158, 0, 0.22) 0%, rgba(30, 22, 16, 0.95) 75%);
+    border: 1px solid rgba(255, 158, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.spice-toast-thumb img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
+}
+
+.spice-toast-thumb .spice-toast-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.spice-toast-body {
+    flex-grow: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.spice-toast-tag {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: #ffaa1d;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+}
+
+.spice-toast-tag .pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00e676;
+    box-shadow: 0 0 8px #00e676;
+    display: inline-block;
+    animation: toastPulse 1.4s infinite ease-in-out;
+}
+
+@keyframes toastPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.35); opacity: 0.65; }
+}
+
+.spice-toast-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spice-toast-meta {
+    font-size: 12px;
+    color: #b5aba0;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spice-toast-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.spice-toast-btn-view {
+    background: linear-gradient(90deg, #ff9e00, #ff4d00);
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 50px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(255, 77, 0, 0.35);
+}
+
+.spice-toast-btn-view:hover {
+    transform: translateY(-1px) scale(1.04);
+    box-shadow: 0 6px 16px rgba(255, 77, 0, 0.5);
+    color: #ffffff !important;
+}
+
+.spice-toast-close {
+    background: transparent;
+    border: none;
+    color: #9c9284;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spice-toast-close:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.spice-toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(90deg, #ffaa1d, #ff4d00);
+    box-shadow: 0 0 10px rgba(255, 120, 0, 0.7);
+    transform-origin: left;
+}
+
+@keyframes toastProgressAnim {
+    from {
+        transform: scaleX(1);
+    }
+    to {
+        transform: scaleX(0);
+    }
+}
+
+/* Badge Bounce Animation */
+@keyframes cartBounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.3); }
+    60% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+.cart-bounce {
+    animation: cartBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+/* Toast Confirmation Action Buttons */
+.spice-toast-btn-confirm {
+    background: linear-gradient(90deg, #e53935, #c62828);
+    color: #ffffff !important;
+    text-decoration: none !important;
+    border: none;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 50px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(229, 57, 53, 0.4);
+}
+
+.spice-toast-btn-confirm:hover {
+    transform: translateY(-1px) scale(1.04);
+    box-shadow: 0 6px 16px rgba(229, 57, 53, 0.6);
+}
+
+.spice-toast-btn-cancel {
+    background: rgba(255, 255, 255, 0.08);
+    color: #d1c7bc !important;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    text-decoration: none !important;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 50px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.spice-toast-btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff !important;
+}
+
+/* Global Dark Theme Text Contrast Enhancement */
+.text-muted {
+    color: #c9baa8 !important;
+}

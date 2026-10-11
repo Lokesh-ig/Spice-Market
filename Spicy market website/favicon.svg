@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#261b13"/>
+      <stop offset="100%" stop-color="#0e0a07"/>
+    </linearGradient>
+
+    <!-- Chili Flame Gradient -->
+    <linearGradient id="chiliGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb300"/>
+      <stop offset="35%" stop-color="#ff3d00"/>
+      <stop offset="100%" stop-color="#c62828"/>
+    </linearGradient>
+
+    <!-- Fresh Leaf Stem Gradient -->
+    <linearGradient id="stemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00e676"/>
+      <stop offset="100%" stop-color="#1b5e20"/>
+    </linearGradient>
+
+    <!-- Amber Glow -->
+    <filter id="ambientGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#ff5722" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- Luxury Dark Tile Background -->
+  <rect width="64" height="64" rx="18" fill="url(#bgGrad)"/>
+  <rect width="64" height="64" rx="18" fill="none" stroke="#ffaa1d" stroke-width="2" stroke-opacity="0.45"/>
+
+  <!-- Glowing Chili Pepper Icon -->
+  <g filter="url(#ambientGlow)">
+    <!-- Stem & Leaf -->
+    <path d="M42 13 C47 9, 52 13, 50 18 C48 20, 44 20, 41 18 Z" fill="url(#stemGrad)" />
+    <path d="M37 17 C41 15, 46 17, 47 20 C43 22, 38 22, 36 19 Z" fill="#2e7d32" />
+
+    <!-- Chili Pepper Body Curve -->
+    <path d="M42 20 C47 26, 49 35, 43 44 C38 52, 28 56, 17 58 C21 51, 26 46, 28 40 C30 33, 31 26, 38 20 Z" fill="url(#chiliGrad)" />
+
+    <!-- 3D Luminous Highlight Curve -->
+    <path d="M39 23 C43 28, 44 35, 40 42 C36 47, 29 52, 22 55 C25 50, 29 45, 31 39 C33 33, 33 27, 39 23 Z" fill="#ffffff" opacity="0.32" />
+  </g>
+</svg>
