@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice Market - Project Architecture Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-canvas: #060913;
+            --card-bg: rgba(10, 16, 30, 0.85);
+            --border-glow: rgba(0, 210, 255, 0.22);
+            --border-glow-hover: rgba(0, 210, 255, 0.45);
+            --accent-cyan: #00d2ff;
+            --accent-blue: #0077ff;
+            --accent-purple: #7928ca;
+            --text-white: #ffffff;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --mono-font: 'JetBrains Mono', monospace;
+            --sans-font: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(0, 210, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(121, 40, 202, 0.08) 0%, transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            color: var(--text-white);
+            font-family: var(--sans-font);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .showcase-wrapper {
+            max-width: 1140px;
+            width: 100%;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-top: 2px solid var(--accent-cyan);
+            border-radius: 24px;
+            padding: 2.25rem;
+            position: relative;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65), 0 0 35px rgba(0, 210, 255, 0.08);
+            transition: all 0.35s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-glow-hover);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8), 0 0 50px rgba(0, 210, 255, 0.14);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 960px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .category-pill {
+            display: inline-block;
+            background: rgba(0, 210, 255, 0.12);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            font-family: var(--mono-font);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1.25rem;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 119, 255, 0.1));
+            border: 1px solid rgba(0, 210, 255, 0.4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+
+        .project-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .project-subtitle {
+            font-family: var(--mono-font);
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            margin-top: 4px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .info-block {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 1.15rem 1.35rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            font-family: var(--mono-font);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.45rem;
+            display: block;
+        }
+
+        .info-text {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        .workflow-panel {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(0, 210, 255, 0.18);
+            border-radius: 18px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .workflow-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .workflow-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--mono-font);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .live-tag {
+            font-family: var(--mono-font);
+            font-size: 0.68rem;
+            color: var(--text-dim);
+            letter-spacing: 0.06em;
+        }
+
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .step-item {
+            background: rgba(10, 18, 32, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+        }
+
+        .step-item:hover {
+            border-color: rgba(0, 210, 255, 0.35);
+            background: rgba(14, 25, 45, 0.95);
+            transform: translateX(3px);
+        }
+
+        .step-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-badge {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: rgba(0, 210, 255, 0.15);
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono-font);
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .step-title {
+            font-family: var(--mono-font);
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+
+        .step-arrow {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .inspect-link {
+            text-align: center;
+            font-family: var(--mono-font);
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            padding: 8px 0;
+            display: block;
+            transition: color 0.2s ease;
+        }
+
+        .inspect-link:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .card-footer-section {
+            margin-top: 2rem;
+            padding-top: 1.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .tech-heading {
+            font-family: var(--mono-font);
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.85rem;
+            font-weight: 700;
+        }
+
+        .tech-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.75rem;
+        }
+
+        .tech-pill {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            font-family: var(--mono-font);
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .tech-pill:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        .action-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-action {
+            background: linear-gradient(135deg, #00d2ff 0%, #0077ff 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(0, 119, 255, 0.35);
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 119, 255, 0.5);
+            filter: brightness(1.08);
+        }
+
+        .btn-secondary-action {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-secondary-action:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(20, 32, 55, 0.9);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="showcase-wrapper">
+        <div class="project-card">
+            
+            <div class="card-grid">
+                <div>
+                    <span class="category-pill">Full-Stack E-Commerce</span>
+
+                    <div class="project-header">
+                        <div class="project-icon">🌶</div>
+                        <div>
+                            <h1 class="project-title">Spice Market</h1>
+                            <div class="project-subtitle">Single-Origin Artisanal Spice & Dispatch Architecture</div>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <span class="info-label">Problem:</span>
+                        <p class="info-text">
+                            Traditional spice commerce lacks provenance verification, exposes consumers to adulteration, and fails to handle dynamic multi-weight tier pricing. Furthermore, e-commerce checkout flows frequently lack automated weight-tiered logistics calculation.
+                        </p>
+                    </div>
+
+                    <div class="info-block">
+                        <span class="info-label">Solution:</span>
+                        <p class="info-text">
+                            Engineered a high-performance web platform pairing a dark-glassmorphism storefront with a Django REST API and cloud MySQL (TiDB). Features real-time multi-weight switching (100g to 5kg), dynamic weight-tier courier tariff calculation (₹50 under 1kg / free on 1kg+), and guest checkout protection with Google OAuth integration.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="workflow-panel">
+                    <div>
+                        <div class="workflow-header">
+                            <div class="workflow-title">
+                                <span>⚡</span> Architecture Workflow
+                            </div>
+                            <span class="live-tag">Live Pipeline</span>
+                        </div>
+
+                        <div class="step-list">
+                            <div class="step-item">
+                                <div class="step-left">
+                                    <span class="step-badge">1</span>
+                                    <span class="step-title">Client Cart & Pack Selection</span>
+                                </div>
+                                <span class="step-arrow">↓</span>
+                            </div>
+
+                            <div class="step-item">
+                                <div class="step-left">
+                                    <span class="step-badge">2</span>
+                                    <span class="step-title">Dynamic Weight & Tariff Engine</span>
+                                </div>
+                                <span class="step-arrow">↓</span>
+                            </div>
+
+                            <div class="step-item">
+                                <div class="step-left">
+                                    <span class="step-badge">3</span>
+                                    <span class="step-title">Django REST API Validation</span>
+                                </div>
+                                <span class="step-arrow">↓</span>
+                            </div>
+
+                            <div class="step-item">
+                                <div class="step-left">
+                                    <span class="step-badge">4</span>
+                                    <span class="step-title">TiDB Cloud MySQL Transaction</span>
+                                </div>
+                                <span class="step-arrow">↓</span>
+                            </div>
+
+                            <div class="step-item">
+                                <div class="step-left">
+                                    <span class="step-badge">5</span>
+                                    <span class="step-title">Order Dispatch & Receipt Manifest</span>
+                                </div>
+                                <span class="step-arrow">✓</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com/Lokesh-ig/Spice-Market" target="_blank" class="inspect-link">
+                        Inspect Full Architecture & Code →
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-footer-section">
+                <div class="tech-heading">Technologies & Frameworks:</div>
+                <div class="tech-pills">
+                    <span class="tech-pill">Django 5</span>
+                    <span class="tech-pill">Django REST Framework</span>
+                    <span class="tech-pill">Python 3.10</span>
+                    <span class="tech-pill">MySQL (TiDB Cloud)</span>
+                    <span class="tech-pill">JavaScript ES6+</span>
+                    <span class="tech-pill">Bootstrap 5</span>
+                    <span class="tech-pill">Gunicorn</span>
+                    <span class="tech-pill">WhiteNoise</span>
+                    <span class="tech-pill">Render PaaS</span>
+                </div>
+
+                <div class="action-row">
+                    <a href="https://spice-market.onrender.com" target="_blank" class="btn-primary-action">
+                        <span>🚀</span> View Live Store →
+                    </a>
+                    <a href="https://github.com/Lokesh-ig/Spice-Market" target="_blank" class="btn-secondary-action">
+                        <span>🐙</span> GitHub
+                    </a>
+                    <a href="https://spice-market.onrender.com/api/health/" target="_blank" class="btn-secondary-action">
+                        <span>⚡</span> Live API Health
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
