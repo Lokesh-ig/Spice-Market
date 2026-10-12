@@ -2,9 +2,9 @@
  * Spice Market - API Client Module
  * Communicates with Django REST backend (/api/...)
  */
-const API_BASE = (window.location.port === '8000')
-    ? ''
-    : 'http://127.0.0.1:8000';
+// Production & Local Dev auto-detection
+const isDevServer = ['5500', '3000', '8080'].includes(window.location.port) || window.location.protocol === 'file:';
+const API_BASE = isDevServer ? 'http://127.0.0.1:8000' : '';
 
 const API = {
     // --- Products ---

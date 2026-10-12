@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: spice-market
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn --chdir backend backend_project.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DB_ENGINE
+        value: "sqlite3"
