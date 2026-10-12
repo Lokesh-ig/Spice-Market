@@ -71,49 +71,61 @@ if DATABASE_URL:
             conn_health_checks=True,
         )
     }
+    # Auto-enable TLS for cloud MySQL databases (like TiDB Cloud, Aiven, etc.)
+    if 'mysql' in DATABASES['default'].get('ENGINE', ''):
+        import ssl
+        DATABASES['default'].setdefault('OPTIONS', {})
+        if 'tidbcloud' in DATABASE_URL or 'ssl' not in DATABASES['default']['OPTIONS']:
+            DATABASES['default']['OPTIONS']['ssl'] = ssl.create_default_context()
 else:
     DB_ENGINE = os.getenv('DB_ENGINE', 'mysql').lower()
+    if DB_ENGINE == 'mysql':
+        db_name = os.getenv('DB_NAME', 'spice_market_db')
+        db_user = os.getenv('DB_USER', 'root')
+        db_password = os.getenv('DB_PASSWORD', '')
+        db_host = os.getenv('DB_HOST', '127.0.0.1')
+        db_port = int(os.getenv('DB_PORT', 3306))
 
-if DB_ENGINE == 'mysql':
-    db_name = os.getenv('DB_NAME', 'spice_market_db')
-    db_user = os.getenv('DB_USER', 'root')
-    db_password = os.getenv('DB_PASSWORD', '')
-    db_host = os.getenv('DB_HOST', '127.0.0.1')
-    db_port = int(os.getenv('DB_PORT', 3306))
+        mysql_connected = False
+        try:
+            # Check connection
+            test_conn = pymysql.connect(
+                host=db_host,
+                user=db_user,
+                password=db_password,
+                port=db_port,
+                charset='utf8mb4',
+                connect_timeout=2
+            )
+            with test_conn.cursor() as cur:
+                cur.execute(f"CREATE DATABASE IF NOT EXISTS `{db_name}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
+            test_conn.close()
+            mysql_connected = True
+        except Exception as e:
+            print(f"[NOTICE] MySQL connection failed ({e}). Run setup_db.py or verify DB_PASSWORD in .env. Using database fallback.")
 
-    mysql_connected = False
-    try:
-        # Check connection
-        test_conn = pymysql.connect(
-            host=db_host,
-            user=db_user,
-            password=db_password,
-            port=db_port,
-            charset='utf8mb4',
-            connect_timeout=2
-        )
-        with test_conn.cursor() as cur:
-            cur.execute(f"CREATE DATABASE IF NOT EXISTS `{db_name}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
-        test_conn.close()
-        mysql_connected = True
-    except Exception as e:
-        print(f"[NOTICE] MySQL connection failed ({e}). Run setup_db.py or verify DB_PASSWORD in .env. Using database fallback.")
-
-    if mysql_connected:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.mysql',
-                'NAME': db_name,
-                'USER': db_user,
-                'PASSWORD': db_password,
-                'HOST': db_host,
-                'PORT': str(db_port),
-                'OPTIONS': {
-                    'charset': 'utf8mb4',
-                    'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-                },
+        if mysql_connected:
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.mysql',
+                    'NAME': db_name,
+                    'USER': db_user,
+                    'PASSWORD': db_password,
+                    'HOST': db_host,
+                    'PORT': str(db_port),
+                    'OPTIONS': {
+                        'charset': 'utf8mb4',
+                        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                    },
+                }
             }
-        }
+        else:
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.sqlite3',
+                    'NAME': BASE_DIR / 'db.sqlite3',
+                }
+            }
     else:
         DATABASES = {
             'default': {
@@ -121,13 +133,6 @@ if DB_ENGINE == 'mysql':
                 'NAME': BASE_DIR / 'db.sqlite3',
             }
         }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
