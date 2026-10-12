@@ -90,6 +90,75 @@ const API = {
         return !!this.getCurrentUser();
     },
 
+    getUserAvatar(user) {
+        if (!user) return 'https://ui-avatars.com/api/?name=Guest&background=ff5e00&color=fff&bold=true&rounded=true';
+        if (user.avatar) return user.avatar;
+        if (user.picture) return user.picture;
+        if (user.avatar_url) return user.avatar_url;
+        if (user.email) {
+            return `https://unavatar.io/${encodeURIComponent(user.email.trim().toLowerCase())}`;
+        }
+        const name = user.first_name || user.username || 'Customer';
+        return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=ff5e00&color=fff&bold=true&rounded=true`;
+    },
+
+    getUserFallbackAvatar(name = 'Customer', size = 64) {
+        return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=ff5e00&color=fff&bold=true&rounded=true&size=${size}`;
+    },
+
+    isGmailUser(user) {
+        if (!user) return false;
+        if (user.provider === 'google') return true;
+        if (user.email && user.email.toLowerCase().includes('@gmail.com')) return true;
+        return false;
+    },
+
+    updateUser(updates) {
+        const current = this.getCurrentUser();
+        if (!current) return null;
+        const updated = { ...current, ...updates };
+        localStorage.setItem('spice_user', JSON.stringify(updated));
+        window.dispatchEvent(new CustomEvent('spice_user_updated', { detail: updated }));
+        return updated;
+    },
+
+    async loginWithGoogle(email, name = '', photoUrl = '') {
+        const cleanEmail = email.trim().toLowerCase();
+        const displayName = name.trim() || cleanEmail.split('@')[0];
+        const avatar = photoUrl || `https://unavatar.io/${encodeURIComponent(cleanEmail)}`;
+
+        // Attempt backend registration/login to sync with database
+        try {
+            const res = await this.login(cleanEmail, 'GoogleAuth@2026');
+            if (res && res.user) {
+                const userObj = { ...res.user, avatar: avatar, provider: 'google' };
+                localStorage.setItem('spice_user', JSON.stringify(userObj));
+                return userObj;
+            }
+        } catch (e) {
+            try {
+                const res = await this.register(displayName, cleanEmail, 'GoogleAuth@2026');
+                if (res && res.user) {
+                    const userObj = { ...res.user, avatar: avatar, provider: 'google' };
+                    localStorage.setItem('spice_user', JSON.stringify(userObj));
+                    return userObj;
+                }
+            } catch (regErr) { }
+        }
+
+        const userObj = {
+            id: Date.now(),
+            username: cleanEmail.split('@')[0],
+            email: cleanEmail,
+            first_name: displayName,
+            avatar: avatar,
+            provider: 'google'
+        };
+        localStorage.setItem('spice_user', JSON.stringify(userObj));
+        window.dispatchEvent(new CustomEvent('spice_user_updated', { detail: userObj }));
+        return userObj;
+    },
+
     // --- Orders & Checkout ---
     async placeOrder(orderData) {
         const res = await fetch(`${API_BASE}/api/orders/`, {

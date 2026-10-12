@@ -11,9 +11,16 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    avatar = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'date_joined']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'date_joined', 'avatar']
+
+    def get_avatar(self, obj):
+        if obj.email:
+            return f"https://unavatar.io/{obj.email.strip().lower()}"
+        return None
 
 
 class RegisterSerializer(serializers.Serializer):

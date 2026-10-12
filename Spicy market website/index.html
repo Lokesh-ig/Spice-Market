@@ -511,31 +511,78 @@
             }
             window.showSpiceToast = showSpiceToast;
 
-            // Render Auth state in Navbar
-            const user = SpiceAPI.getCurrentUser();
-            const navAuth = document.getElementById("navAuthContainer");
-            if (user && navAuth) {
-                navAuth.innerHTML = `
-                    <div class="dropdown d-inline-block">
-                        <button class="btn btn-nav-action btn-nav-user dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span>👤</span> ${user.first_name || user.username}
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end luxury-user-dropdown shadow">
-                            <li class="dropdown-header-box">
-                                <span class="user-greeting">Signed in as</span>
-                                <strong class="user-email-text">${user.email}</strong>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item dropdown-logout-link" href="#" id="logoutBtn">🚪 Log Out</a></li>
-                        </ul>
-                    </div>
-                `;
-                document.getElementById("logoutBtn").addEventListener("click", async (e) => {
-                    e.preventDefault();
-                    await SpiceAPI.logout();
-                    window.location.reload();
-                });
+            // Render Auth state in Navbar with Customer Gmail Image
+            function renderNavbarAuth() {
+                const user = SpiceAPI.getCurrentUser();
+                const navAuth = document.getElementById("navAuthContainer");
+                if (!navAuth) return;
+
+                if (user) {
+                    const displayName = user.first_name || user.username || 'Customer';
+                    const avatarUrl = SpiceAPI.getUserAvatar(user);
+                    const isGmail = SpiceAPI.isGmailUser(user);
+                    const fallbackUrl = SpiceAPI.getUserFallbackAvatar(displayName, 64);
+
+                    navAuth.innerHTML = `
+                        <div class="dropdown d-inline-block">
+                            <button class="btn btn-nav-action btn-nav-user dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="userMenuBtn" title="${isGmail ? 'Signed in with Gmail / Google' : displayName}">
+                                <span class="nav-avatar-ring">
+                                    <img src="${avatarUrl}" class="nav-avatar-img" alt="${displayName}" onerror="this.onerror=null; this.src='${fallbackUrl}';" />
+                                </span>
+                                <span class="nav-user-name">${displayName}</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end luxury-user-dropdown shadow">
+                                <li class="dropdown-header-box">
+                                    <div class="dropdown-avatar-wrap">
+                                        <img src="${avatarUrl}" class="dropdown-avatar-img" alt="${displayName}" onerror="this.onerror=null; this.src='${fallbackUrl}';" />
+                                        ${isGmail ? `
+                                        <span class="gmail-pill-badge" title="Google / Gmail Account">
+                                          <svg width="12" height="12" viewBox="0 0 24 24">
+                                            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.02h3.87c2.26-2.09 3.675-5.17 3.675-9.12z"/>
+                                            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.02c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.26v3.12C3.25 21.36 7.35 24 12 24z"/>
+                                            <path fill="#FBBC05" d="M5.27 14.27c-.25-.72-.39-1.49-.39-2.27s.14-1.55.39-2.27V6.61H1.26C.46 8.23 0 10.06 0 12s.46 3.77 1.26 5.39l4.01-3.12z"/>
+                                            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.25 2.64 1.26 6.61l4.01 3.12c.95-2.85 3.6-4.98 6.73-4.98z"/>
+                                          </svg>
+                                        </span>` : ''}
+                                    </div>
+                                    <div class="user-meta-info">
+                                        <div class="user-name-title">${displayName}</div>
+                                        <div class="user-email-text">${user.email || ''}</div>
+                                        ${isGmail ? `<span class="badge-gmail-connected">● Gmail Verified</span>` : ''}
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item dropdown-action-link" href="#" id="changeAvatarBtn">
+                                        <span>📷</span> Change Profile Photo
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item dropdown-action-link" href="Cart.html">
+                                        <span>🛒</span> View Cart & Checkout
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item dropdown-logout-link" href="#" id="logoutBtn">🚪 Log Out</a></li>
+                            </ul>
+                        </div>
+                    `;
+
+                    document.getElementById("logoutBtn").addEventListener("click", async (e) => {
+                        e.preventDefault();
+                        await SpiceAPI.logout();
+                        window.location.reload();
+                    });
+
+                    document.getElementById("changeAvatarBtn").addEventListener("click", (e) => {
+                        e.preventDefault();
+                        openProfilePhotoModal();
+                    });
+                }
             }
+
+            renderNavbarAuth();
+            window.addEventListener('spice_user_updated', renderNavbarAuth);
 
             // Fallback product list matching local images
             const fallbackProducts = [
@@ -803,8 +850,130 @@
                     contactBtn.innerHTML = `<span>Send Message</span> <span>➔</span>`;
                 }
             });
+
+            // Profile Photo Customizer Modal Logic
+            function openProfilePhotoModal() {
+                const user = SpiceAPI.getCurrentUser();
+                if (!user) return;
+
+                const modalEl = document.getElementById("avatarModal");
+                if (!modalEl) return;
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+
+                const previewImg = document.getElementById("avatarModalPreview");
+                const nameEl = document.getElementById("avatarModalCustomerName");
+                const emailEl = document.getElementById("avatarModalCustomerEmail");
+                const gmailBadge = document.getElementById("avatarModalGmailBadge");
+                const urlInput = document.getElementById("avatarModalUrlInput");
+                const fileInput = document.getElementById("avatarModalFileInput");
+                const fetchGmailBtn = document.getElementById("avatarModalFetchGmailBtn");
+                const saveBtn = document.getElementById("avatarModalSaveBtn");
+
+                const currentAvatar = SpiceAPI.getUserAvatar(user);
+                previewImg.src = currentAvatar;
+                nameEl.textContent = user.first_name || user.username || 'Customer';
+                emailEl.textContent = user.email || '';
+                urlInput.value = user.avatar || '';
+
+                const isGmail = SpiceAPI.isGmailUser(user);
+                if (gmailBadge) gmailBadge.style.display = isGmail ? 'inline-flex' : 'none';
+
+                fetchGmailBtn.onclick = function() {
+                    const gmailAvatar = `https://unavatar.io/${encodeURIComponent(user.email || 'lokesh25@gmail.com')}`;
+                    urlInput.value = gmailAvatar;
+                    previewImg.src = gmailAvatar;
+                };
+
+                urlInput.oninput = function() {
+                    if (urlInput.value.trim()) {
+                        previewImg.src = urlInput.value.trim();
+                    }
+                };
+
+                fileInput.onchange = function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(evt) {
+                            previewImg.src = evt.target.result;
+                            urlInput.value = evt.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                };
+
+                saveBtn.onclick = function() {
+                    const finalAvatar = (urlInput.value || '').trim() || previewImg.src;
+                    SpiceAPI.updateUser({ avatar: finalAvatar });
+                    modal.hide();
+                    if (typeof showSpiceToast === 'function') {
+                        showSpiceToast({
+                            title: 'Profile Updated',
+                            subtitle: 'Your profile photo has been updated successfully!',
+                            image: finalAvatar,
+                            showCartLink: false
+                        });
+                    }
+                };
+
+                modal.show();
+            }
+            window.openProfilePhotoModal = openProfilePhotoModal;
         });
     </script>
+
+    <!-- Luxury Profile Photo Customizer Modal -->
+    <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background: rgba(22, 17, 13, 0.98); backdrop-filter: blur(24px); border: 1px solid rgba(255, 158, 0, 0.38); border-radius: 20px; color: #fff;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-white d-flex align-items-center gap-2" id="avatarModalLabel">
+                        <span>📷</span> Customer Profile Picture
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <!-- Live circular preview -->
+                    <div class="text-center mb-4">
+                        <div class="position-relative d-inline-block">
+                            <div style="width: 88px; height: 88px; border-radius: 50%; border: 3px solid #ff9e00; box-shadow: 0 0 25px rgba(255, 158, 0, 0.45); overflow: hidden; margin: 0 auto; background: #1a120b;">
+                                <img id="avatarModalPreview" src="" alt="Avatar Preview" style="width: 100%; height: 100%; object-fit: cover;" />
+                            </div>
+                            <span id="avatarModalGmailBadge" class="position-absolute bottom-0 end-0 bg-white rounded-circle p-1 shadow border" style="width: 26px; height: 26px; display: none; align-items: center; justify-content: center;">
+                                <svg width="14" height="14" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.02h3.87c2.26-2.09 3.675-5.17 3.675-9.12z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.02c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.26v3.12C3.25 21.36 7.35 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.27c-.25-.72-.39-1.49-.39-2.27s.14-1.55.39-2.27V6.61H1.26C.46 8.23 0 10.06 0 12s.46 3.77 1.26 5.39l4.01-3.12z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.25 2.64 1.26 6.61l4.01 3.12c.95-2.85 3.6-4.98 6.73-4.98z"/></svg>
+                            </span>
+                        </div>
+                        <div class="mt-2 text-warning fw-semibold" id="avatarModalCustomerName">Customer</div>
+                        <small class="text-muted d-block" id="avatarModalCustomerEmail">email@example.com</small>
+                    </div>
+
+                    <!-- Auto fetch from Gmail button -->
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-outline-warning w-100 py-2 d-flex align-items-center justify-content-center gap-2" id="avatarModalFetchGmailBtn" style="border-radius: 12px; font-weight: 600;">
+                            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.02h3.87c2.26-2.09 3.675-5.17 3.675-9.12z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.02c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.26v3.12C3.25 21.36 7.35 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.27c-.25-.72-.39-1.49-.39-2.27s.14-1.55.39-2.27V6.61H1.26C.46 8.23 0 10.06 0 12s.46 3.77 1.26 5.39l4.01-3.12z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.25 2.64 1.26 6.61l4.01 3.12c.95-2.85 3.6-4.98 6.73-4.98z"/></svg>
+                            <span>Fetch / Use Gmail Profile Photo</span>
+                        </button>
+                    </div>
+
+                    <!-- Custom Photo URL -->
+                    <div class="mb-3">
+                        <label class="form-label text-light small fw-semibold">Photo URL or Web Image</label>
+                        <input type="url" id="avatarModalUrlInput" class="form-control" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,158,0,0.3); color: #fff; border-radius: 10px;" placeholder="https://example.com/photo.jpg" />
+                    </div>
+
+                    <!-- Upload Image File -->
+                    <div class="mb-3">
+                        <label class="form-label text-light small fw-semibold">Or Upload from Device</label>
+                        <input type="file" id="avatarModalFileInput" accept="image/*" class="form-control" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,158,0,0.3); color: #fff; border-radius: 10px;" />
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 10px;">Cancel</button>
+                    <button type="button" class="btn btn-warning fw-bold text-dark px-4" id="avatarModalSaveBtn" style="border-radius: 10px; background: linear-gradient(90deg, #ffaa1d, #ff5e00); border: none; color: #fff !important;">Save Photo</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

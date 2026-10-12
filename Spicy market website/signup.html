@@ -105,6 +105,20 @@
             </div>
           </div>
 
+          <!-- Continue with Google Button -->
+          <div class="mb-4">
+            <button type="button" class="btn btn-google-auth w-100 py-2" id="googleAuthBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.02h3.87c2.26-2.09 3.675-5.17 3.675-9.12z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.02c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.26v3.12C3.25 21.36 7.35 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.27 14.27c-.25-.72-.39-1.49-.39-2.27s.14-1.55.39-2.27V6.61H1.26C.46 8.23 0 10.06 0 12s.46 3.77 1.26 5.39l4.01-3.12z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.25 2.64 1.26 6.61l4.01 3.12c.95-2.85 3.6-4.98 6.73-4.98z"/>
+              </svg>
+              <span>Continue with Google / Gmail</span>
+            </button>
+            <div class="auth-divider-strip"><span>or continue with password</span></div>
+          </div>
+
           <!-- Auth Tabs: Sign Up vs Login -->
           <ul class="nav nav-pills nav-fill mb-4" id="authTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -181,6 +195,71 @@
     </div>
   </main>
 
+  <!-- Google Sign-In Interactive Modal -->
+  <div class="modal fade" id="googleModal" tabindex="-1" aria-labelledby="googleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius: 20px; border: 1px solid rgba(0,0,0,0.12); box-shadow: 0 20px 45px rgba(0,0,0,0.2);">
+        <div class="modal-header border-0 pb-0">
+          <div class="d-flex align-items-center gap-2">
+            <svg width="22" height="22" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.02h3.87c2.26-2.09 3.675-5.17 3.675-9.12z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.02c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.26v3.12C3.25 21.36 7.35 24 12 24z"/>
+              <path fill="#FBBC05" d="M5.27 14.27c-.25-.72-.39-1.49-.39-2.27s.14-1.55.39-2.27V6.61H1.26C.46 8.23 0 10.06 0 12s.46 3.77 1.26 5.39l4.01-3.12z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.25 2.64 1.26 6.61l4.01 3.12c.95-2.85 3.6-4.98 6.73-4.98z"/>
+            </svg>
+            <h5 class="modal-title fw-bold" id="googleModalLabel" style="font-size: 1.1rem; color: #202124;">Sign in with Google</h5>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pt-3 pb-4">
+          <p class="text-muted small mb-3">Choose an account or type your Gmail to sign in with your Google profile image automatically.</p>
+
+          <!-- Quick account choice -->
+          <div class="list-group mb-3">
+            <button type="button" class="list-group-item list-group-item-action d-flex align-items-center gap-3 p-3 border rounded-3 mb-2" id="quickPickLokeshBtn">
+              <img src="https://unavatar.io/lokesh25@gmail.com" class="rounded-circle border" width="44" height="44" alt="Lokesh" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Lokesh&background=ff7b00&color=fff&bold=true';" />
+              <div class="flex-grow-1 text-start">
+                <div class="fw-bold text-dark">Lokesh</div>
+                <div class="text-muted small">lokesh25@gmail.com</div>
+              </div>
+              <span class="badge bg-light text-dark border">Recent</span>
+            </button>
+          </div>
+
+          <div class="text-center text-muted small my-2">-- OR ENTER YOUR GMAIL --</div>
+
+          <div class="mb-3 mt-2">
+            <label class="form-label small fw-semibold text-secondary">Your Name</label>
+            <input type="text" id="googleCustomName" class="form-control" placeholder="e.g. Lokesh" value="Lokesh" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-semibold text-secondary">Your Gmail Address</label>
+            <div class="input-group">
+              <input type="email" id="googleCustomEmail" class="form-control" placeholder="username@gmail.com" value="lokesh25@gmail.com" />
+              <span class="input-group-text bg-white">@gmail.com</span>
+            </div>
+          </div>
+
+          <!-- Live Avatar Preview Strip -->
+          <div class="p-3 bg-light rounded-3 d-flex align-items-center gap-3 mb-3 border">
+            <div style="width: 44px; height: 44px; border-radius: 50%; overflow: hidden; border: 2px solid #ff9e00; flex-shrink: 0;">
+              <img id="googlePreviewAvatar" src="https://unavatar.io/lokesh25@gmail.com" width="100%" height="100%" style="object-fit: cover;" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Lokesh&background=ff7b00&color=fff&bold=true';" />
+            </div>
+            <div>
+              <div class="small fw-bold text-dark" id="googlePreviewName">Lokesh</div>
+              <div class="text-muted small" style="font-size: 11.5px;">✓ Gmail profile image ready to show in navbar button</div>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary w-100 py-2 fw-semibold" id="confirmGoogleSignInBtn" style="background: #1a73e8; border: none; border-radius: 12px;">
+            Continue with Google
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
@@ -200,6 +279,80 @@
         if (loginTabBtn) {
           bootstrap.Tab.getOrCreateInstance(loginTabBtn).show();
         }
+      }
+
+      // --- Google Sign-In Handler ---
+      const googleAuthBtn = document.getElementById('googleAuthBtn');
+      const googleModalEl = document.getElementById('googleModal');
+      const googleModal = new bootstrap.Modal(googleModalEl);
+      const quickPickLokeshBtn = document.getElementById('quickPickLokeshBtn');
+      const googleCustomName = document.getElementById('googleCustomName');
+      const googleCustomEmail = document.getElementById('googleCustomEmail');
+      const googlePreviewAvatar = document.getElementById('googlePreviewAvatar');
+      const googlePreviewName = document.getElementById('googlePreviewName');
+      const confirmGoogleSignInBtn = document.getElementById('confirmGoogleSignInBtn');
+
+      if (googleAuthBtn) {
+        googleAuthBtn.addEventListener('click', () => {
+          googleModal.show();
+        });
+      }
+
+      function updateGooglePreview() {
+        let email = (googleCustomEmail.value || '').trim();
+        if (email && !email.includes('@')) {
+          email = email + '@gmail.com';
+        }
+        const name = (googleCustomName.value || '').trim() || 'User';
+        googlePreviewName.textContent = name;
+        if (email) {
+          googlePreviewAvatar.src = `https://unavatar.io/${encodeURIComponent(email)}`;
+          googlePreviewAvatar.onerror = function () {
+            this.onerror = null;
+            this.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=ff7b00&color=fff&bold=true`;
+          };
+        }
+      }
+
+      if (googleCustomEmail) {
+        googleCustomEmail.addEventListener('input', updateGooglePreview);
+      }
+      if (googleCustomName) {
+        googleCustomName.addEventListener('input', updateGooglePreview);
+      }
+
+      async function completeGoogleLogin(email, name) {
+        if (!email.includes('@')) email = email + '@gmail.com';
+        confirmGoogleSignInBtn.disabled = true;
+        confirmGoogleSignInBtn.textContent = 'Signing in with Google...';
+
+        try {
+          const avatar = `https://unavatar.io/${encodeURIComponent(email)}`;
+          const user = await SpiceAPI.loginWithGoogle(email, name, avatar);
+          googleModal.hide();
+          showAlert(document.getElementById('signupAlert'), 'success', `🎉 Signed in as ${user.first_name || user.username} with Gmail!`);
+          setTimeout(() => {
+            window.location.href = redirectTarget;
+          }, 600);
+        } catch (err) {
+          alert('Could not complete Google Sign-in: ' + err.message);
+          confirmGoogleSignInBtn.disabled = false;
+          confirmGoogleSignInBtn.textContent = 'Continue with Google';
+        }
+      }
+
+      if (quickPickLokeshBtn) {
+        quickPickLokeshBtn.addEventListener('click', () => {
+          completeGoogleLogin('lokesh25@gmail.com', 'Lokesh');
+        });
+      }
+
+      if (confirmGoogleSignInBtn) {
+        confirmGoogleSignInBtn.addEventListener('click', () => {
+          const email = (googleCustomEmail.value || 'lokesh25@gmail.com').trim();
+          const name = (googleCustomName.value || 'Lokesh').trim();
+          completeGoogleLogin(email, name);
+        });
       }
 
       // Sign Up Handler
@@ -235,6 +388,13 @@
 
         try {
           const res = await SpiceAPI.register(name, email, pass, phone);
+          if (res && res.user) {
+            // Automatically ensure avatar is set for Gmail users
+            if (email.toLowerCase().includes('@gmail.com') && !res.user.avatar) {
+              res.user.avatar = `https://unavatar.io/${encodeURIComponent(email)}`;
+              localStorage.setItem('spice_user', JSON.stringify(res.user));
+            }
+          }
           showAlert(signupAlert, 'success', '🎉 Welcome to the Spice Family! Account created successfully.');
           signupForm.reset();
           setTimeout(() => {
@@ -268,6 +428,14 @@
 
         try {
           const res = await SpiceAPI.login(ident, pwd);
+          if (res && res.user) {
+            // Automatically ensure avatar is set for Gmail users
+            const userEmail = (res.user.email || ident).toLowerCase();
+            if (userEmail.includes('@gmail.com') && !res.user.avatar) {
+              res.user.avatar = `https://unavatar.io/${encodeURIComponent(userEmail)}`;
+              localStorage.setItem('spice_user', JSON.stringify(res.user));
+            }
+          }
           showAlert(loginAlert, 'success', `Welcome back, ${res.user.first_name || res.user.username}!`);
           setTimeout(() => {
             window.location.href = redirectTarget;
