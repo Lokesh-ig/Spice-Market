@@ -95,6 +95,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'user', 'customer_name', 'customer_email',
             'customer_phone', 'shipping_address', 'total_amount',
+            'delivery_fee', 'total_weight_kg',
             'status', 'created_at', 'items'
         ]
 

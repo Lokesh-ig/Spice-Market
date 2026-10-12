@@ -30,6 +30,8 @@ class Order(models.Model):
     customer_phone = models.CharField(max_length=20, blank=True, default='')
     shipping_address = models.TextField()
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    delivery_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    total_weight_kg = models.DecimalField(max_digits=6, decimal_places=3, default=0.000)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
 

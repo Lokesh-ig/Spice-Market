@@ -225,13 +225,23 @@ class OrderCreateAndListView(APIView):
                         "subtotal": subtotal
                     })
 
+                total_order_weight_kg = round(sum(p['weight_kg'] * p['quantity'] for p in processed_items), 3)
+                # Delivery charge applies if total weight is under 1kg (1000g)
+                if total_order_weight_kg < 1.0:
+                    delivery_fee = 50.00
+                else:
+                    delivery_fee = 0.00
+                grand_total = round(total_amount + delivery_fee, 2)
+
                 order = Order.objects.create(
                     user=request.user if request.user.is_authenticated else None,
                     customer_name=customer_name,
                     customer_email=customer_email,
                     customer_phone=customer_phone,
                     shipping_address=shipping_address,
-                    total_amount=round(total_amount, 2),
+                    total_amount=grand_total,
+                    delivery_fee=delivery_fee,
+                    total_weight_kg=total_order_weight_kg,
                     status='pending'
                 )
 

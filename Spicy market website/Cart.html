@@ -415,6 +415,32 @@
             letter-spacing: 0.05em;
         }
 
+        .delivery-charge-pill {
+            background: rgba(255, 158, 0, 0.18);
+            border: 1px solid rgba(255, 158, 0, 0.45);
+            color: #ffaa1d;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 12px;
+            letter-spacing: 0.03em;
+        }
+
+        .delivery-threshold-box {
+            background: rgba(255, 158, 0, 0.08);
+            border: 1px solid rgba(255, 158, 0, 0.28);
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-top: 0.85rem;
+            margin-bottom: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .delivery-threshold-box.free-unlocked {
+            background: rgba(76, 175, 80, 0.12);
+            border-color: rgba(76, 175, 80, 0.4);
+        }
+
         .summary-total-amount {
             color: var(--spice-gold-bright);
             font-size: 1.8rem;
@@ -692,7 +718,15 @@
                         <span class="receipt-label">Spice Packs:</span>
                         <div id="confirmedItemsList" class="receipt-value text-end" style="max-width: 65%;">--</div>
                     </div>
-                    <div class="receipt-row pt-2">
+                    <div class="receipt-row">
+                        <span class="receipt-label">Total Spice Weight:</span>
+                        <span class="receipt-value text-warning fw-bold" id="confirmedWeight">--</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="receipt-label">Courier Delivery:</span>
+                        <span class="receipt-value" id="confirmedDeliveryFee">--</span>
+                    </div>
+                    <div class="receipt-row pt-2 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
                         <strong class="text-white fs-5">Total Amount:</strong>
                         <strong class="text-warning fs-5" id="confirmedTotal">--</strong>
                     </div>
@@ -748,17 +782,25 @@
                         <strong class="text-white" id="summarySubtotal">₹0.00</strong>
                     </div>
                     <div class="summary-row">
-                        <span>Farm-Fresh Courier:</span>
-                        <span class="summary-badge-free">FREE DISPATCH</span>
+                        <span>Total Spice Weight:</span>
+                        <strong class="text-warning" id="summaryTotalWeight">0g</strong>
+                    </div>
+                    <div class="summary-row align-items-start">
+                        <div>
+                            <span>Farm-Fresh Courier:</span>
+                            <small class="d-block text-muted" id="courierNote" style="font-size: 11px;">Free dispatch on orders of 1kg or more</small>
+                        </div>
+                        <div id="summaryCourierBadge" class="text-end">
+                            <span class="summary-badge-free">FREE DISPATCH</span>
+                        </div>
                     </div>
                     <div class="summary-row">
                         <span>Aroma-Lock Packaging:</span>
                         <span class="summary-badge-free">INCLUDED</span>
                     </div>
-                    <div class="summary-row">
-                        <span>Total Spice Weight:</span>
-                        <strong class="text-warning" id="summaryTotalWeight">0g</strong>
-                    </div>
+
+                    <!-- Free Delivery Threshold / Progress Nudge -->
+                    <div id="deliveryThresholdNudge" class="delivery-threshold-box d-none"></div>
 
                     <div class="summary-row total-row">
                         <span>Total Amount:</span>
@@ -1111,6 +1153,9 @@
                 cartItemsList.innerHTML = "";
 
                 const summaryTotalWeight = document.getElementById("summaryTotalWeight");
+                const summaryCourierBadge = document.getElementById("summaryCourierBadge");
+                const courierNote = document.getElementById("courierNote");
+                const deliveryThresholdNudge = document.getElementById("deliveryThresholdNudge");
 
                 if (cart.length === 0) {
                     cartItemsList.classList.add("d-none");
@@ -1119,6 +1164,9 @@
                     summarySubtotal.textContent = "₹0.00";
                     summaryTotal.textContent = "₹0.00";
                     if (summaryTotalWeight) summaryTotalWeight.textContent = "0g";
+                    if (summaryCourierBadge) summaryCourierBadge.innerHTML = '<span class="summary-badge-free">FREE DISPATCH</span>';
+                    if (courierNote) courierNote.textContent = "Free dispatch on orders of 1kg or more";
+                    if (deliveryThresholdNudge) deliveryThresholdNudge.classList.add("d-none");
                     placeOrderBtn.disabled = true;
                     return;
                 }
@@ -1184,7 +1232,66 @@
 
                 cartCount.textContent = totalItems;
                 summarySubtotal.textContent = `₹${total.toFixed(2)}`;
-                summaryTotal.textContent = `₹${total.toFixed(2)}`;
+
+                // Delivery Charge Rule: If total spice weight is under 1kg (< 1000g), apply ₹50 delivery charge; 1kg+ is FREE
+                const DELIVERY_FEE = 50.0;
+                let deliveryCharge = 0.0;
+
+                if (totalWeightKg < 1.0) {
+                    deliveryCharge = DELIVERY_FEE;
+                    const currentGrams = Math.round(totalWeightKg * 1000);
+                    const remainingGrams = Math.max(0, 1000 - currentGrams);
+                    const pct = Math.min(100, Math.round((totalWeightKg / 1.0) * 100));
+
+                    if (summaryCourierBadge) {
+                        summaryCourierBadge.innerHTML = `<span class="delivery-charge-pill">+ ₹${DELIVERY_FEE.toFixed(2)}</span>`;
+                    }
+                    if (courierNote) {
+                        courierNote.textContent = "Standard courier applies for orders under 1kg";
+                    }
+
+                    if (deliveryThresholdNudge) {
+                        deliveryThresholdNudge.className = "delivery-threshold-box mb-3";
+                        deliveryThresholdNudge.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="small text-light fw-bold">🚚 Free Delivery on 1kg+:</span>
+                                <span class="small text-warning fw-bold">${currentGrams}g / 1000g (${pct}%)</span>
+                            </div>
+                            <div class="progress mb-2" style="height: 6px; background: rgba(255,255,255,0.12); border-radius: 4px;">
+                                <div class="progress-bar" style="width: ${pct}%; background: linear-gradient(90deg, #ff9e00, #ff4d00); border-radius: 4px;"></div>
+                            </div>
+                            <small class="text-warning d-block" style="font-size: 11.5px; line-height: 1.4;">
+                                💡 Add <strong>${remainingGrams}g</strong> more spices to unlock <strong>FREE Courier Dispatch</strong>!
+                            </small>
+                        `;
+                        deliveryThresholdNudge.classList.remove("d-none");
+                    }
+                } else {
+                    deliveryCharge = 0.0;
+                    if (summaryCourierBadge) {
+                        summaryCourierBadge.innerHTML = `<span class="summary-badge-free">FREE DISPATCH</span>`;
+                    }
+                    if (courierNote) {
+                        courierNote.textContent = "✓ 1kg+ order qualifies for Free Delivery";
+                    }
+
+                    if (deliveryThresholdNudge) {
+                        deliveryThresholdNudge.className = "delivery-threshold-box free-unlocked mb-3";
+                        deliveryThresholdNudge.innerHTML = `
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="fs-5">🎉</span>
+                                <div>
+                                    <span class="small text-success fw-bold d-block">FREE Delivery Unlocked!</span>
+                                    <small class="text-muted" style="font-size: 11px;">Your order weighs ${totalWeightKg.toFixed(2)}kg (1kg+) and ships with free courier dispatch.</small>
+                                </div>
+                            </div>
+                        `;
+                        deliveryThresholdNudge.classList.remove("d-none");
+                    }
+                }
+
+                const grandTotal = total + deliveryCharge;
+                summaryTotal.textContent = `₹${grandTotal.toFixed(2)}`;
 
                 if (summaryTotalWeight) {
                     if (totalWeightKg >= 1.0) {
@@ -1514,6 +1621,31 @@
                                 <span class="text-warning fw-bold ms-2">₹${(item.price * item.quantity).toFixed(2)}</span>
                             </div>
                         `).join('');
+                    }
+
+                    // Total order weight & delivery fee in receipt
+                    const totalCartWeight = cart.reduce((sum, it) => sum + ((parseFloat(it.weight_kg) || 1.0) * (parseInt(it.quantity) || 1)), 0);
+                    const orderWeightKg = (response.order && response.order.total_weight_kg !== undefined) 
+                        ? parseFloat(response.order.total_weight_kg) 
+                        : totalCartWeight;
+                    const orderDeliveryFee = (response.order && response.order.delivery_fee !== undefined) 
+                        ? parseFloat(response.order.delivery_fee) 
+                        : (orderWeightKg < 1.0 ? 50.0 : 0.0);
+
+                    const confirmedWeightEl = document.getElementById("confirmedWeight");
+                    if (confirmedWeightEl) {
+                        confirmedWeightEl.textContent = orderWeightKg >= 1.0 
+                            ? `${orderWeightKg.toFixed(2)} kg (${Math.round(orderWeightKg * 1000)}g)` 
+                            : `${Math.round(orderWeightKg * 1000)}g`;
+                    }
+
+                    const confirmedDeliveryEl = document.getElementById("confirmedDeliveryFee");
+                    if (confirmedDeliveryEl) {
+                        if (orderDeliveryFee > 0) {
+                            confirmedDeliveryEl.innerHTML = `<span class="delivery-charge-pill">+ ₹${orderDeliveryFee.toFixed(2)}</span> <small class="text-muted ms-1">(Under 1kg)</small>`;
+                        } else {
+                            confirmedDeliveryEl.innerHTML = `<span class="summary-badge-free">FREE DISPATCH</span> <small class="text-muted ms-1">(1kg+ Order)</small>`;
+                        }
                     }
 
                     // Clear cart

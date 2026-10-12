@@ -102,6 +102,56 @@ def run_tests():
     assert abs(total_amount - expected_total) < 0.01, f"Total mismatch: {total_amount} != {expected_total}"
     print(f"✅ 7. POST /api/orders/ -> 201 Created (Order #{order_id}, Total: ₹{total_amount:.2f})")
 
+    # 7b. Under 1kg Delivery Fee Rule (< 1000g incurs +₹50.00 fee)
+    under_1kg_order = {
+        "customer_name": "Spice Explorer",
+        "customer_email": test_email,
+        "customer_phone": "9876543210",
+        "shipping_address": "45 Saffron Road, Madurai",
+        "items": [
+            {
+                "product_id": products[0]['id'],
+                "product_name": products[0]['name'],
+                "weight": "250g",
+                "weight_kg": 0.25,
+                "quantity": 1,
+                "price": float(products[0]['price']) * 0.25
+            }
+        ]
+    }
+    res_under = client.post('/api/orders/', data=json.dumps(under_1kg_order), content_type='application/json')
+    assert res_under.status_code == 201, f"Under-1kg order failed: {res_under.status_code} - {res_under.content}"
+    data_under = res_under.json()['order']
+    assert float(data_under['delivery_fee']) == 50.00, f"Expected ₹50 delivery fee for under 1kg, got {data_under['delivery_fee']}"
+    assert float(data_under['total_weight_kg']) == 0.25, f"Expected 0.25kg weight, got {data_under['total_weight_kg']}"
+    expected_under_total = round((float(products[0]['price']) * 0.25) + 50.00, 2)
+    assert abs(float(data_under['total_amount']) - expected_under_total) < 0.01, f"Total mismatch: {data_under['total_amount']} != {expected_under_total}"
+    print(f"✅ 7b. POST /api/orders/ (Under 1kg: 250g) -> Delivery Fee ₹50.00 Applied! (Total: ₹{float(data_under['total_amount']):.2f})")
+
+    # 7c. 1kg or more Free Delivery Rule (>= 1000g gets FREE delivery)
+    free_delivery_order = {
+        "customer_name": "Spice Explorer",
+        "customer_email": test_email,
+        "customer_phone": "9876543210",
+        "shipping_address": "45 Saffron Road, Madurai",
+        "items": [
+            {
+                "product_id": products[0]['id'],
+                "product_name": products[0]['name'],
+                "weight": "1 kg",
+                "weight_kg": 1.0,
+                "quantity": 1,
+                "price": float(products[0]['price'])
+            }
+        ]
+    }
+    res_free = client.post('/api/orders/', data=json.dumps(free_delivery_order), content_type='application/json')
+    assert res_free.status_code == 201, f"1kg order failed: {res_free.status_code} - {res_free.content}"
+    data_free = res_free.json()['order']
+    assert float(data_free['delivery_fee']) == 0.00, f"Expected FREE delivery for 1kg+, got {data_free['delivery_fee']}"
+    assert float(data_free['total_weight_kg']) == 1.0, f"Expected 1.0kg weight, got {data_free['total_weight_kg']}"
+    print(f"✅ 7c. POST /api/orders/ (1kg+ Order: 1.0kg) -> FREE Delivery Applied! (Fee: ₹0.00, Total: ₹{float(data_free['total_amount']):.2f})")
+
     # 8. List Orders
     res = client.get('/api/orders/')
     assert res.status_code == 200, f"Order list failed: {res.status_code}"
