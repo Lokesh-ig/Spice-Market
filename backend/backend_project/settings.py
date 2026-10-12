@@ -60,8 +60,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend_project.wsgi.application'
 
-# Database Configuration (MySQL as default)
-DB_ENGINE = os.getenv('DB_ENGINE', 'mysql').lower()
+# Database Configuration
+DATABASE_URL = os.getenv('DATABASE_URL')
+if DATABASE_URL:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    DB_ENGINE = os.getenv('DB_ENGINE', 'mysql').lower()
 
 if DB_ENGINE == 'mysql':
     db_name = os.getenv('DB_NAME', 'spice_market_db')
